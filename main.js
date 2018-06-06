@@ -1,5 +1,7 @@
 'use strict';
 
+
+
 function updateIFrame() {
 	var wins = $('.window')
 	var screen = $('div.block.content')
@@ -8,8 +10,17 @@ function updateIFrame() {
 	var ww = window.innerWidth
 	var wh = window.innerHeight
 	if (ww > wh) {
+		var lim = Math.sqrt(count)
+		//if (count % 2 != 0) count += 1
+		for (var i = Math.floor(lim); i>0; i--) {
+//console.log(i, (count / i), (count % i))
+			if((count % i) == 0) {
+				count = count / i
+				break
+			}
+		}
 		screen.css('column-count', count)
-		console.log('updateIFrame() p', wins, count)
+		console.log('updateIFrame() p', lim, count)
 	} else {
 		screen.css('column-count', 1)
 	}

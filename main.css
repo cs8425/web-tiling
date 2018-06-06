@@ -20,14 +20,18 @@ div.block {
 
 div.block.content {
 	line-height: 0;
-	column-count: 1; /* tab counts */
-	column-gap: .1em;  
+	/* tab counts */
+	column-count: 1;
+	column-gap: .1em;
+/*	display: flex;
+	flex-wrap: wrap;*/
 }
 
 div.block.content div.window {
 	width: 100% !important;
 	height: auto !important;
 	/*display: inline-block;*/
+	overflow: hidden;
 }
 
 
