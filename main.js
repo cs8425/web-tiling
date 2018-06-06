@@ -4,14 +4,20 @@ function updateIFrame() {
 	var wins = $('.window')
 	var screen = $('div.block.content')
 	var count = wins.length - 1
-	screen.css('column-count', count)
 
-	//var title = $('div.window > div.header')
+	var ww = window.innerWidth
+	var wh = window.innerHeight
+	if (ww > wh) {
+		screen.css('column-count', count)
+		console.log('updateIFrame() p', wins, count)
+	} else {
+		screen.css('column-count', 1)
+	}
 
 	var iframe = wins.find('iframe')
 	var w = wins.width();
 	var h = (w * 9.0 / 16.0);
-	console.log('updateIFrame()', wins, count, w, h)
+	console.log('updateIFrame()', ww, wh, wins, count, w, h)
 	iframe.width(w).height(h)
 }
 
@@ -75,9 +81,11 @@ function init(){
 
 	$('.window > .header > span.go.btn').on('click', goUrl)
 	$('.window > .header > span.close.btn').on('click', closeTab)
+	$(window).on('resize', updateIFrame)
 }
 
 $(window).on('load', function(e) {
 	init()
+	//updateIFrame()
 })
 
