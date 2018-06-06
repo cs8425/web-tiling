@@ -1,0 +1,140 @@
+body {
+	font-family: monospace;
+	width: auto;
+	font-size: 1em;
+}
+
+#add-tab {
+	border-radius: .5em;
+	background-color: #4c7daf;
+	color: white;
+	z-index: 10;
+	right: 1em;
+	bottom: 1em;
+	position: absolute;
+}
+
+div.block {
+	margin: 1vh .5vw;
+}
+
+div.block.content {
+	line-height: 0;
+	column-count: 2; /* tab counts */
+	column-gap: .1em;  
+}
+
+div.block.content div.window {
+	width: 100% !important;
+	height: auto !important;
+	/*display: inline-block;*/
+}
+
+
+.window > .header {
+	padding: .5em .5em;
+	background: #000;
+}
+.window > .header > input.url {
+	width: 90%;
+}
+.window > .header {
+	font-weight: bold;
+	display: flex;
+}
+.window > .header > .close:hover, .modal > .content > .header > .close:focus {
+	color: black;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+input {
+	border-radius: .2em;
+	background: #FFFFFF;
+	border: 1px solid rgba(34, 36, 38, 0.15);
+	box-shadow: none;
+}
+
+
+
+.btn {
+	border: none;
+	border-radius: .2em;
+	padding: .8em;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: .8em;
+	margin: auto;
+	cursor: pointer;
+}
+
+.btn.primary {
+	background-color: #4caf50;
+	color: #fff;
+}
+.btn.cancel {
+	background-color: #E0E1E2;
+	color: rgba(0, 0, 0, 0.6);
+}
+.btn.danger {
+	background-color: #DB2828;
+	color: #fff;
+}
+
+
+.hide, .tmpl {
+	display: none;
+}
+
+
+.modal {
+	display: none;
+	position: fixed; /* Stay in place */
+	z-index: 1; /* Sit on top */
+	left: 0;
+	top: 0;
+	width: 100vw; /* Full width */
+	height: 100vh; /* Full height */
+	overflow: auto; /* Enable scroll if needed */
+	background-color: rgb(0,0,0); /* Fallback color */
+	background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal > .content {
+	background-color: #fefefe;
+	margin: 15vh auto;
+	border: 1px solid #888;
+	width: 80%;
+	border-radius: 1em;
+}
+.modal > .content > .close {
+	color: #aaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+}
+.modal > .content > .header > .close:hover, .modal > .content > .header > .close:focus {
+	color: black;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.param > div {
+	display: flex;
+	width: 90%;
+	padding: .5em 0;
+}
+.param > div > div:nth-child(1) {
+	text-align: right;
+	width: 45%;
+}
+.param > div > * {
+	padding: .5em .7em;
+}
+
+.param > div.time > input {
+	width: 12vw;
+}
+
+
