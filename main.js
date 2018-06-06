@@ -1,35 +1,39 @@
 'use strict';
 
-
+function calc(count) {
+	var lim = Math.sqrt(count)
+	for (var i = Math.floor(lim); i>0; i--) {
+//console.log(i, (count / i), (count % i))
+		if((count % i) == 0) {
+			return count / i
+		}
+	}
+	return 1
+}
 
 function updateIFrame() {
 	var wins = $('.window')
 	var screen = $('div.block.content')
 	var count = wins.length - 1
+	var div = 1
 
 	var ww = window.innerWidth
 	var wh = window.innerHeight
 	if (ww > wh) {
-		var lim = Math.sqrt(count)
-		//if (count % 2 != 0) count += 1
-		for (var i = Math.floor(lim); i>0; i--) {
-//console.log(i, (count / i), (count % i))
-			if((count % i) == 0) {
-				count = count / i
-				break
-			}
-		}
-		screen.css('column-count', count)
-		console.log('updateIFrame() p', lim, count)
-	} else {
-		screen.css('column-count', 1)
+		div = calc(count)
+		console.log('updateIFrame() p', count, div)
+		if ((div == count) && (count > 3) && (count % 2 != 0)) div = calc(count + 1)
+		console.log('updateIFrame() p2', count, div)
 	}
 
 	var iframe = wins.find('iframe')
-	var w = wins.width();
-	var h = (w * 9.0 / 16.0);
-	console.log('updateIFrame()', ww, wh, wins, count, w, h)
-	iframe.width(w).height(h)
+	var wvw = 98 / div
+	wins.find('.header').css('width', 'calc(' + (98 / div) + 'vw - 1em)')
+	iframe.css('width', wvw + 'vw')
+	var w = iframe.width()
+	var h = (w * 9.0 / 16.0)
+	iframe.height(h)
+	console.log('updateIFrame()', ww, wh, wins, count, w, h, wvw)
 }
 
 function tryUrl(url) {

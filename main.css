@@ -2,6 +2,7 @@ body {
 	font-family: monospace;
 	width: auto;
 	font-size: 1em;
+	margin: 0px;
 }
 
 #add-tab {
@@ -20,18 +21,13 @@ div.block {
 
 div.block.content {
 	line-height: 0;
-	/* tab counts */
-	column-count: 1;
-	column-gap: .1em;
-/*	display: flex;
-	flex-wrap: wrap;*/
+	display: flex;
+	flex-flow: row wrap;
+	/*justify-content: center;*/
 }
 
 div.block.content div.window {
-	width: 100% !important;
 	height: auto !important;
-	/*display: inline-block;*/
-	overflow: hidden;
 }
 
 
