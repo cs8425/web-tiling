@@ -22,7 +22,7 @@ function updateIFrame() {
 	if (ww > wh) {
 		div = calc(count)
 		console.log('updateIFrame() p', count, div)
-		if ((div == count) && (count > 3) && (count % 2 != 0)) div = calc(count + 1)
+		if ((div == count) && (count >= 3) && (count % 2 != 0)) div = calc(count + 1)
 		console.log('updateIFrame() p2', count, div)
 	}
 
@@ -37,9 +37,24 @@ function updateIFrame() {
 }
 
 function tryUrl(url) {
-	var vid = url.match(/v=([a-zA-Z0-9\-_]+)/)
-	if (url.match('youtube.com/') && (vid.length == 2)) {
-		return 'https://www.youtube.com/embed/' + vid[1] + '?autoplay=1'
+	switch (true) {
+	case /youtube.com\//.test(url) :
+		var vid = url.match(/v=([a-zA-Z0-9\-_]+)/)
+		if (vid && vid.length == 2) {
+			return 'https://www.youtube.com/embed/' + vid[1] + '?autoplay=1'
+		}
+		break;
+	case /twitch.tv\//.test(url) :
+		var vid = url.match(/videos\/([0-9]+)/)
+		if (vid && vid.length == 2) {
+			return 'http://player.twitch.tv/?video=' + vid[1]
+		}
+
+		var channel = url.match(/twitch.tv\/([a-zA-Z0-9\-_]+)/)
+		if (channel && channel.length == 2) {
+			return 'http://player.twitch.tv/?channel=' + channel[1]
+		}
+		break;
 	}
 	return url
 }
@@ -74,7 +89,6 @@ function init(){
 		var input = $(this).parent().find('input')
 		var url = input.val()
 		input.val('')
-		//console.log('open-tab()', e, this, url, vid)
 
 		var tmpl = $('#tmpl > div.window').clone()
 		tmpl.appendTo($('div.block.content'))
@@ -85,7 +99,6 @@ function init(){
 		console.log('open-tab()', url, tryUrl(url))
 
 		updateIFrame()
-
 	})
 
 	$('.window > .header > span.go.btn').on('click', goUrl)

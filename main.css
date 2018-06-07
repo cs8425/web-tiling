@@ -26,10 +26,6 @@ div.block.content {
 	/*justify-content: center;*/
 }
 
-div.block.content div.window {
-	height: auto !important;
-}
-
 
 .window > .header {
 	padding: .5em .5em;
@@ -76,7 +72,7 @@ input {
 	background-color: #4caf50;
 	color: #fff;
 }
-.btn.cancel {
+.btn.close {
 	background-color: #E0E1E2;
 	color: rgba(0, 0, 0, 0.6);
 }
