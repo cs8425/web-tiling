@@ -15,9 +15,6 @@ function updateIFrame() {
 	var wh = window.innerHeight
 	if (ww > wh) {
 		div = calc(count)
-		console.log('updateIFrame() p', count, div)
-		//if ((div == count) && (count >= 3) && (count % 2 != 0)) div = calc(count + 1)
-		//console.log('updateIFrame() p2', count, div)
 		$('body').css('height', '100vh')
 	} else {
 		$('body').css('height', '')
@@ -26,19 +23,13 @@ function updateIFrame() {
 	var iframe = wins.find('iframe')
 	var hdr = wins.find('.header')
 	var wvw = Math.floor(ww / div) - (div*4)
-	//var wvw = 100 / div
-	//hdr.css('width', 'calc(' + wvw + 'vw - 1em)')
-	//iframe.css('width', wvw + 'vw')
-	//hdr.width(wvw)
-	//iframe.width(wvw+4)
 	wins.width(wvw)
 
 	var hdrh = (hdr.length)? hdr[0].offsetHeight : 0;
-	var w = wvw//iframe.width()
+	var w = wvw
 	var h2 = wh / Math.ceil(count / div)
 	var h = (w * 9.0 / 16.0)
 	var h1 = h + hdrh
-console.log('updateIFrame() h', h, h1, h2)
 	h = (h1 > h2)? h2 : h
 	iframe.height(h-hdrh - 2)
 	console.log('updateIFrame()', ww, wh, wins, count, w, h, wvw)
