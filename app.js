@@ -2,19 +2,13 @@
 
 function calc(count) {
 	var lim = Math.sqrt(count)
-	for (var i = Math.floor(lim); i>0; i--) {
-//console.log(i, (count / i), (count % i))
-		if((count % i) == 0) {
-			return count / i
-		}
-	}
-	return 1
+	return Math.ceil(lim)
 }
 
 function updateIFrame() {
 	var wins = $('.window')
 	var screen = $('div.block.content')
-	var count = wins.length - 1
+	var count = wins.length - 1 // 1 is template
 	var div = 1
 
 	var ww = window.innerWidth
@@ -22,17 +16,31 @@ function updateIFrame() {
 	if (ww > wh) {
 		div = calc(count)
 		console.log('updateIFrame() p', count, div)
-		if ((div == count) && (count >= 3) && (count % 2 != 0)) div = calc(count + 1)
-		console.log('updateIFrame() p2', count, div)
+		//if ((div == count) && (count >= 3) && (count % 2 != 0)) div = calc(count + 1)
+		//console.log('updateIFrame() p2', count, div)
+		$('body').css('height', '100vh')
+	} else {
+		$('body').css('height', '')
 	}
 
 	var iframe = wins.find('iframe')
-	var wvw = 98 / div
-	wins.find('.header').css('width', 'calc(' + (98 / div) + 'vw - 1em)')
-	iframe.css('width', wvw + 'vw')
-	var w = iframe.width()
+	var hdr = wins.find('.header')
+	var wvw = Math.floor(ww / div) - (div*4)
+	//var wvw = 100 / div
+	//hdr.css('width', 'calc(' + wvw + 'vw - 1em)')
+	//iframe.css('width', wvw + 'vw')
+	//hdr.width(wvw)
+	//iframe.width(wvw+4)
+	wins.width(wvw)
+
+	var hdrh = (hdr.length)? hdr[0].offsetHeight : 0;
+	var w = wvw//iframe.width()
+	var h2 = wh / Math.ceil(count / div)
 	var h = (w * 9.0 / 16.0)
-	iframe.height(h)
+	var h1 = h + hdrh
+console.log('updateIFrame() h', h, h1, h2)
+	h = (h1 > h2)? h2 : h
+	iframe.height(h-hdrh - 2)
 	console.log('updateIFrame()', ww, wh, wins, count, w, h, wvw)
 }
 
