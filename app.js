@@ -11,7 +11,7 @@ function updateIFrame() {
 	var count = wins.length - 1 // 1 is template
 	var div = 1
 
-	var ww = window.innerWidth
+	var ww = ($(document).width() >> 1) << 1 //window.innerWidth
 	var wh = window.innerHeight
 	if (ww > wh) {
 		div = calc(count)
@@ -20,9 +20,10 @@ function updateIFrame() {
 		$('body').css('height', '')
 	}
 
+	var space = 0 //Math.ceil(3840 / ww)
 	var iframe = wins.find('iframe')
 	var hdr = wins.find('.header')
-	var wvw = Math.floor(ww / div) - (div*4)
+	var wvw = Math.floor(ww / div) - (div*space*2)
 	wins.width(wvw)
 
 	var hdrh = (hdr.length)? hdr[0].offsetHeight : 0;
@@ -31,8 +32,12 @@ function updateIFrame() {
 	var h = (w * 9.0 / 16.0)
 	var h1 = h + hdrh
 	h = (h1 > h2)? h2 : h
-	iframe.height(h-hdrh - 2)
-	console.log('updateIFrame()', ww, wh, wins, count, w, h, wvw)
+	if (ww > wh) {
+		iframe.height(h-hdrh - space)
+	} else {
+		iframe.height(h)
+	}
+	console.log('updateIFrame()', ww, wh, wins, count, div, w, h, wvw)
 }
 
 function tryUrl(url) {

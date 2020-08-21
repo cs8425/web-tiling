@@ -22,22 +22,21 @@ div.block {
 div.block.content {
 	line-height: 0;
 	display: flex;
-	flex-flow: row wrap;
-	/*justify-content: center;*/
+	/*flex-flow: row wrap;*/
+	flex-flow: wrap;
+	/*justify-content: space-between;*/
 }
 
 
 .window > .header {
 	padding: 2px;
-	width: 100%;
+	/*width: 100%;*/
 	background: #000;
+	font-weight: bold;
+	display: flex;
 }
 .window > .header > input.url {
 	width: 90%;
-}
-.window > .header {
-	font-weight: bold;
-	display: flex;
 }
 .window > .header > .close:hover, .modal > .content > .header > .close:focus {
 	color: black;
@@ -47,6 +46,9 @@ div.block.content {
 .window > iframe {
 	max-height: 90vh;
 	width: 100%;
+}
+.window {
+	/*margin-inline-end: auto;*/
 }
 
 input {
