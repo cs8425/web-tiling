@@ -116,6 +116,7 @@ function closeTab(e){
 	console.log('closeTab()', e, this)
 	tab.remove()
 	updateIFrame()
+	saveTabs()
 }
 
 function init(){
