@@ -40,6 +40,47 @@ function updateIFrame() {
 	console.log('updateIFrame()', ww, wh, wins, count, div, w, h, wvw)
 }
 
+function saveTabs() {
+	var wins = $('.window').toArray()
+	wins.pop() // remove template
+
+	var out = []
+	while(wins.length) {
+		var w = wins.shift()
+		var e = $(w)
+		var tab = {
+			u: e.find('input.url').val(),
+			s: e.find('iframe').attr('src'),
+		}
+		out.push(tab)
+	}
+	localStorage.setItem('tabs', JSON.stringify(out))
+	return out
+}
+
+function loadTabs() {
+	var str = localStorage.getItem('tabs')
+	if (!str) return
+
+	$('div.block.content').html('') // clear all tabs
+	var tabs = JSON.parse(str)
+	while(tabs.length) {
+		var info = tabs.shift()
+		addTabs(info.u, info.s)
+	}
+	updateIFrame()
+}
+
+function addTabs(url, src) {
+	var tmpl = $('#tmpl > div.window').clone()
+	tmpl.appendTo($('div.block.content'))
+	tmpl.find('iframe').attr('src', src)
+	tmpl.find('input.url').val(url)
+	tmpl.find('span.go.btn').on('click', goUrl)
+	tmpl.find('span.close.btn').on('click', closeTab)
+	console.log('open-tab()', url, src)
+}
+
 function tryUrl(url) {
 	switch (true) {
 	case /youtube.com\//.test(url) :
@@ -63,6 +104,20 @@ function tryUrl(url) {
 	return url
 }
 
+function goUrl(e){
+	var header = $(this).parent()
+	var url = header.find('input.url').val()
+	console.log('goto()', e, this, url)
+	header.parent().find('iframe').attr('src', tryUrl(url))
+	saveTabs()
+}
+function closeTab(e){
+	var tab = $(this).parent().parent()
+	console.log('closeTab()', e, this)
+	tab.remove()
+	updateIFrame()
+}
+
 function init(){
 	// modal
 	$('.modal > .content .close, .modal > .content .cancel.btn').on('click', function(e){
@@ -71,19 +126,6 @@ function init(){
 	$('.modal').on('click', function(e){
 		if(e.target == this) $('.modal').css('display', 'none')
 	})
-
-	var goUrl = function(e){
-		var header = $(this).parent()
-		var url = header.find('input.url').val()
-		console.log('goto()', e, this, url)
-		header.parent().find('iframe').attr('src', tryUrl(url))
-	}
-	var closeTab = function(e){
-		var tab = $(this).parent().parent()
-		console.log('closeTab()', e, this)
-		tab.remove()
-		updateIFrame()
-	}
 
 	$('#add-tab').on('click', function(e){
 		$('#new-tab').css('display', 'block')
@@ -95,15 +137,10 @@ function init(){
 		var url = input.val()
 		input.val('')
 
-		var tmpl = $('#tmpl > div.window').clone()
-		tmpl.appendTo($('div.block.content'))
-		tmpl.find('iframe').attr('src', tryUrl(url))
-		tmpl.find('input.url').val(url)
-		tmpl.find('span.go.btn').on('click', goUrl)
-		tmpl.find('span.close.btn').on('click', closeTab)
-		console.log('open-tab()', url, tryUrl(url))
+		addTabs(url, tryUrl(url))
 
 		updateIFrame()
+		saveTabs()
 	})
 
 	$('.window > .header > span.go.btn').on('click', goUrl)
@@ -113,6 +150,7 @@ function init(){
 
 $(window).on('load', function(e) {
 	init()
+	loadTabs()
 	updateIFrame()
 })
 
