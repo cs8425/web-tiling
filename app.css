@@ -130,7 +130,9 @@ input {
 }
 .param > div > div:nth-child(1) {
 	text-align: right;
-	width: 45%;
+}
+.param > div > input {
+	width: 75%;
 }
 .param > div > * {
 	padding: .5em .7em;

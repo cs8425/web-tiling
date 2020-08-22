@@ -87,6 +87,7 @@ function init(){
 
 	$('#add-tab').on('click', function(e){
 		$('#new-tab').css('display', 'block')
+		$('.param > div > input')[0].focus()
 	})
 	$('#open-tab').on('click', function(e){
 		$('.modal').css('display', 'none')
