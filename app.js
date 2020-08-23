@@ -89,15 +89,21 @@ function tryUrl(url) {
 			return 'https://www.youtube.com/embed/' + vid[1] + '?autoplay=1'
 		}
 		break;
+	case /youtu.be\//.test(url) :
+		var vid = url.match(/([a-zA-Z0-9\-_]+)/)
+		if (vid && vid.length == 2) {
+			return 'https://www.youtube.com/embed/' + vid[1] + '?autoplay=1'
+		}
+		break;
 	case /twitch.tv\//.test(url) :
 		var vid = url.match(/videos\/([0-9]+)/)
 		if (vid && vid.length == 2) {
-			return 'http://player.twitch.tv/?video=' + vid[1]
+			return 'https://player.twitch.tv/?video=' + vid[1] + '&parent=' + location.hostname
 		}
 
 		var channel = url.match(/twitch.tv\/([a-zA-Z0-9\-_]+)/)
 		if (channel && channel.length == 2) {
-			return 'http://player.twitch.tv/?channel=' + channel[1]
+			return 'https://player.twitch.tv/?channel=' + channel[1] + '&parent=' + location.hostname
 		}
 		break;
 	}
