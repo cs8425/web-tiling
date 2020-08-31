@@ -2,6 +2,7 @@
 <head>
 	<meta charset="utf-8">
 	<title>tiling youtube/twitch video</title>
+	<meta name="copyright-icon" content="いの(@h14haku_rei)">
 	<meta name="keywords" content="tiling video">
 	<meta name="description" content="tiling web page base on iframe. Contribute to cs8425/web-tiling development by creating an account on GitHub.">
 	<meta name="copyright" content="cs8425">
@@ -9,6 +10,11 @@
 	<meta name="robots" content="index,follow" />
 	<meta name="url" content="https://github.com/cs8425/web-tiling">
 	<link rel="stylesheet" href="app.css">
+	<link rel="manifest" href="manifest.json">
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="msapplication-starturl" content="/">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
 
 <body>
@@ -44,5 +50,46 @@
 </body>
 <script src="jquery.min.js"></script>
 <script src="app.js"></script>
+<script>
+if ("serviceWorker" in navigator) {
+	function listenForWaitingServiceWorker(reg, callback) {
+		function awaitStateChange() {
+			reg.installing.addEventListener('statechange', function() {
+				if (this.state === 'installed') callback(reg.waiting);
+			});
+		}
+		if (!reg) return;
+		if (reg.waiting) return callback(reg.waiting);
+		if (reg.installing) awaitStateChange();
+		reg.addEventListener('updatefound', awaitStateChange);
+	}
+
+	//navigator.serviceWorker.addEventListener('controllerchange', function() {
+	//	alert("有新版本!!  請重新整理");
+	//	location.reload();
+	//});
+	if (navigator.serviceWorker.controller) {
+		console.log("[PWA] active service worker found, no need to register");
+		navigator.serviceWorker.getRegistration().then(function(reg) {
+			console.log("[PWA] try update service worker");
+			//reg.update();
+			function promptUserToRefresh(sw) {
+				sw.postMessage('skipWaiting');
+				alert("有新版本!!  請重新整理");
+				location.reload();
+			}
+			listenForWaitingServiceWorker(reg, promptUserToRefresh);
+		});
+	} else {
+		// Register the service worker
+		navigator.serviceWorker.register("sw.js", {
+			scope: "./"
+		})
+		.then(function(reg) {
+			console.log("[PWA] Service worker has been registered for scope: " + reg.scope);
+		});
+	}
+}
+</script>
 </html>
 
