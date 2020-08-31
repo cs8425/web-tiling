@@ -90,7 +90,7 @@ function tryUrl(url) {
 		}
 		break;
 	case /youtu.be\//.test(url) :
-		var vid = url.match(/([a-zA-Z0-9\-_]+)/)
+		var vid = (new URL(url)).pathname.match(/\/([a-zA-Z0-9\-_]+)/)
 		if (vid && vid.length == 2) {
 			return 'https://www.youtube.com/embed/' + vid[1] + '?autoplay=1'
 		}
